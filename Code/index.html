@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Star Land Hotel Bastos — Hôtel de prestige à Yaoundé</title>
+<meta name="description" content="Star Land Hotel Bastos — 84 chambres & suites, restaurant gastronomique, piscine, spa. Au cœur de Bastos, Yaoundé. Réservation directe." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@200;300;400;500&family=Fira+Code:wght@400&display=swap">
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.13/dist/lenis.min.js"></script>
+
+<style>
+/* ========================================================================
+   TOKENS
+   ======================================================================== */
+:root {
+  --bg: #0a0a0a;
+  --bg-soft: #0f0f0f;
+  --bg-card: #111111;
+  --text: #ffffff;
+  --text-soft: #dadada;
+  --text-mute: #8a8a8a;
+  --accent: rgba(200, 170, 130, 1);
+  --accent-soft: rgba(200, 170, 130, 0.25);
+  --accent-dim: rgba(200, 170, 130, 0.6);
+  --line: rgba(255, 255, 255, 0.10);
+  --line-soft: rgba(255, 255, 255, 0.06);
+
+  --ease-quiet: cubic-bezier(.22, 1, .36, 1);
+  --ease-precise: cubic-bezier(.4, 0, .2, 1);
+  --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
+
+  --serif: 'EB Garamond', Georgia, serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'Fira Code', 'SF Mono', monospace;
+
+  --container: 1400px;
+  --container-narrow: 860px;
+  --container-wide: 1600px;
+}
+
+/* ========================================================================
+   RESET
+   ======================================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { background: none; border: none; color: inherit; font: inherit; outline: none; }
+::selection { background: var(--accent); color: var(--bg); }
+
+/* ========================================================================
+   TYPOGRAPHY
+   ======================================================================== */
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.15; letter-spacing: -0.01em; }
+.italic { font-style: italic; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 400;
+}
+.eyebrow::after {
+  content: '';
+  display: inline-block;
+  width: 2rem;
+  height: 1px;
+  background: var(--accent-soft);
+  transition: width 800ms var(--ease-quiet) 300ms;
+}
+.is-in .eyebrow::after { width: 3rem; }
+
+.section-header {
+  margin-bottom: 5rem;
+}
+.section-header__title {
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  margin-top: 2rem;
+  max-width: 22ch;
+}
+.section-header__sub {
+  font-size: 1.0625rem;
+  color: var(--text-soft);
+  max-width: 52ch;
+  margin-top: 2rem;
+  font-weight: 300;
+}
+
+/* ========================================================================
+   LAYOUT
+   ======================================================================== */
+.container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
+.container--narrow { max-width: var(--container-narrow); }
+.container--wide { max-width: var(--container-wide); }
+
+section { padding: 8rem 0; position: relative; }
+@media (max-width: 768px) { section { padding: 5rem 0; } }
+
+/* ========================================================================
+   BUTTONS
+   ======================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.75rem;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  transition: all 600ms var(--ease-quiet);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.btn--primary:hover {
+  background: transparent;
+  color: var(--accent);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+}
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.btn__arrow {
+  width: 16px;
+  height: 1px;
+  background: currentColor;
+  position: relative;
+  transition: width 600ms var(--ease-quiet);
+}
+.btn__arrow::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -3px;
+  width: 8px;
+  height: 1px;
+  background: currentColor;
+  transform: rotate(40deg);
+  transform-origin: right center;
+}
+.btn:hover .btn__arrow { width: 24px; }
+
+/* ========================================================================
+   NAV
+   ======================================================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.5rem 0;
+  transition: background 500ms var(--ease-quiet), border-color 500ms var(--ease-quiet), padding 500ms var(--ease-quiet);
+  border-bottom: 1px solid transparent;
+}
+.nav.is-scrolled {
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: var(--line-soft);
+  padding: 1rem 0;
+}
+.nav__inner {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.nav__brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.nav__brand-name {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+}
+.nav__brand-loc {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--text-mute);
+  margin-top: 2px;
+}
+.nav__links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.nav__links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  transition: color 400ms var(--ease-quiet);
+  position: relative;
+}
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 400ms var(--ease-quiet);
+}
+.nav__links a:hover { color: var(--accent); }
+.nav__links a:hover::after { width: 100%; }
+.nav__cta {
+  padding: 0.75rem 1.25rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  transition: all 500ms var(--ease-quiet);
+}
+.nav__cta:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+.nav__burger {
+  display: none;
+  width: 28px;
+  height: 14px;
+  position: relative;
+  cursor: pointer;
+}
+.nav__burger span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--text);
+  transition: transform 400ms var(--ease-quiet);
+}
+.nav__burger span:first-child { top: 0; }
+.nav__burger span:last-child { bottom: 0; }
+.nav__burger.is-open span:first-child { transform: translateY(6.5px) rotate(45deg); }
+.nav__burger.is-open span:last-child { transform: translateY(-6.5px) rotate(-45deg); }
+
+@media (max-width: 980px) {
+  .nav__links { display: none; }
+  .nav__cta { display: none; }
+  .nav__burger { display: block; }
+  .nav__links.is-open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    padding: 2rem;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+}
+
+/* ========================================================================
+   HERO
+   ======================================================================== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 720px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 2rem 6rem;
+}
+.hero__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: kenburns 28s ease-in-out infinite alternate;
+}
+@keyframes kenburns {
+  0% { transform: scale(1.08) translate(-1.5%, -1%); }
+  100% { transform: scale(1.18) translate(1.5%, 1%); }
+}
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.35) 35%, rgba(10,10,10,0.85) 100%);
+}
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--container-wide);
+  width: 100%;
+  margin: 0 auto;
+}
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.hero__eyebrow span:not(:last-child)::after {
+  content: '·';
+  margin-left: 1rem;
+  color: var(--accent-dim);
+}
+.hero__title {
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+  margin-bottom: 3rem;
+}
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.05em;
+}
+.line-mask .line {
+  display: block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+.hero__sub {
+  font-size: 1.125rem;
+  color: var(--text-soft);
+  max-width: 48ch;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.hero__cta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(30px);
+  flex-wrap: wrap;
+}
+.hero__meta {
+  display: flex;
+  gap: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  max-width: 600px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.hero__meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.hero__meta-num {
+  font-family: var(--serif);
+  font-size: 2rem;
+  line-height: 1;
+}
+.hero__meta-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.hero__scroll {
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.hero__scroll-text {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  writing-mode: vertical-rl;
+}
+.hero__scroll-line {
+  width: 1px;
+  height: 60px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: var(--accent);
+  animation: scrollLine 2.4s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+@media (max-width: 768px) {
+  .hero { padding: 0 1.5rem 4rem; }
+  .hero__scroll { display: none; }
+  .hero__meta { gap: 2rem; }
+  .hero__meta-num { font-size: 1.5rem; }
+}
+
+/* ========================================================================
+   INTRO / ABOUT (sticky two-column)
+   ======================================================================== */
+.about { padding-top: 10rem; }
+.about__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: start;
+}
+.about__left {
+  position: sticky;
+  top: 8rem;
+}
+.about__title {
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  line-height: 1.1;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+.about__lede {
+  font-size: 1.125rem;
+  color: var(--text-soft);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+.about__signature {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.about__signature-name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.125rem;
+}
+.about__signature-role {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-top: 4px;
+}
+.about__right {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+}
+.about__block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.about__block-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+}
+.about__block-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1200ms var(--ease-quiet);
+}
+.about__block:hover .about__block-img img { transform: scale(1.04); }
+.about__block-caption {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.about__block-text {
+  font-size: 1rem;
+  color: var(--text-soft);
+  line-height: 1.8;
+}
+@media (max-width: 980px) {
+  .about__inner { grid-template-columns: 1fr; gap: 4rem; }
+  .about__left { position: static; }
+}
+
+/* ========================================================================
+   STATS BAR
+   ======================================================================== */
+.stats {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 4rem 0;
+}
+.stats__inner {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-left: 1px solid var(--line-soft);
+  padding-left: 2rem;
+}
+.stats__item:first-child { border-left: none; padding-left: 0; }
+.stats__num {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stats__num-suffix {
+  font-size: 1rem;
+  color: var(--accent);
+  margin-left: 0.25rem;
+  vertical-align: super;
+}
+.stats__label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-top: 0.5rem;
+}
+@media (max-width: 768px) {
+  .stats__inner { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .stats__item:nth-child(3) { border-left: none; padding-left: 0; }
+}
+
+/* ========================================================================
+   SERVICES (hover row accent bar)
+   ======================================================================== */
+.services { background: var(--bg-soft); }
+.services__list {
+  margin-top: 4rem;
+  border-top: 1px solid var(--line);
+}
+.service-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1.5fr 120px;
+  gap: 3rem;
+  padding: 2.5rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  align-items: baseline;
+  transition: padding 600ms var(--ease-quiet);
+}
+.service-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 0;
+  background: var(--accent);
+  transition: height 700ms var(--ease-quiet);
+}
+.service-row:hover { padding-left: 2.5rem; }
+.service-row:hover::before { height: 100%; }
+.service-row__num {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--text-mute);
+  transition: color 600ms var(--ease-quiet);
+}
+.service-row:hover .service-row__num { color: var(--accent); }
+.service-row__title {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  transition: color 600ms var(--ease-quiet);
+}
+.service-row:hover .service-row__title { color: var(--accent); }
+.service-row__desc {
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  opacity: 0.6;
+  transition: opacity 600ms var(--ease-quiet);
+}
+.service-row:hover .service-row__desc { opacity: 1; }
+.service-row__hours {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  text-align: right;
+}
+@media (max-width: 980px) {
+  .service-row {
+    grid-template-columns: 60px 1fr;
+    gap: 1rem 1.5rem;
+    padding: 2rem 1rem;
+  }
+  .service-row__desc { grid-column: 1 / -1; }
+  .service-row__hours { grid-column: 2 / -1; text-align: left; }
+}
+
+/* ========================================================================
+   ROOMS (horizontal pin-scroll carousel)
+   ======================================================================== */
+.rooms { padding: 0; }
+.rooms__intro {
+  padding: 8rem 2rem 4rem;
+}
+.rooms__intro-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+}
+.rooms__title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.05;
+}
+.rooms__intro-text {
+  color: var(--text-soft);
+  font-size: 1rem;
+  line-height: 1.8;
+  max-width: 44ch;
+}
+.rooms__viewport {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  min-height: 720px;
+}
+.rooms__track {
+  display: flex;
+  gap: 2rem;
+  padding: 0 4rem;
+  height: 100%;
+  align-items: center;
+  will-change: transform;
+}
+.room-card {
+  flex-shrink: 0;
+  width: 380px;
+  height: 560px;
+  background: var(--bg-card);
+  border: 1px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 600ms var(--ease-quiet);
+}
+.room-card:hover { border-color: var(--accent-soft); }
+.room-card__media {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+}
+.room-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1200ms var(--ease-quiet);
+}
+.room-card:hover .room-card__media img { transform: scale(1.05); }
+.room-card__tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(10,10,10,0.85);
+  border: 1px solid var(--accent-soft);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.room-card__body {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+.room-card__name {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.room-card__meta {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.room-card__meta span:not(:last-child)::after {
+  content: '·';
+  margin-left: 1rem;
+  color: var(--accent-dim);
+}
+.room-card__desc {
+  font-size: 0.875rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+  flex: 1;
+}
+.room-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+}
+.room-card__price {
+  display: flex;
+  flex-direction: column;
+}
+.room-card__price-num {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  color: var(--accent);
+  line-height: 1;
+}
+.room-card__price-unit {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-top: 4px;
+}
+.room-card__link {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 500ms var(--ease-quiet);
+}
+.room-card__link:hover { color: var(--accent); }
+.rooms__progress {
+  position: absolute;
+  bottom: 2rem;
+  left: 4rem;
+  width: 12rem;
+  height: 1px;
+  background: var(--line);
+  z-index: 2;
+}
+.rooms__progress-bar {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: width 100ms linear;
+}
+.rooms__hint {
+  position: absolute;
+  bottom: 2rem;
+  right: 4rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  z-index: 2;
+}
+@media (max-width: 1023px) {
+  .rooms__viewport {
+    height: auto;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .rooms__track {
+    height: auto;
+    padding: 0 1.5rem 2rem;
+    gap: 1rem;
+    transform: none !important;
+  }
+  .room-card {
+    scroll-snap-align: start;
+    width: 85vw;
+    max-width: 360px;
+    height: auto;
+    min-height: 540px;
+  }
+  .room-card .room-card__media { height: 220px; }
+  .rooms__progress, .rooms__hint { display: none; }
+  .rooms__intro { padding: 5rem 1.5rem 3rem; }
+  .rooms__intro-inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ========================================================================
+   DINING (sticky two-column)
+   ======================================================================== */
+.dining { padding-top: 10rem; }
+.dining__inner {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 6rem;
+  align-items: start;
+}
+.dining__left {
+  position: sticky;
+  top: 8rem;
+}
+.dining__title {
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  line-height: 1.1;
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+}
+.dining__lede {
+  font-size: 1.0625rem;
+  color: var(--text-soft);
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+.dining__hours {
+  border-top: 1px solid var(--line);
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.dining__hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.dining__hours-row span:first-child { color: var(--text-mute); }
+.dining__hours-row span:last-child { color: var(--text); }
+.dining__right {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.dining__img {
+  width: 100%;
+  overflow: hidden;
+}
+.dining__img--tall { aspect-ratio: 3/4; }
+.dining__img--wide { aspect-ratio: 16/10; }
+.dining__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1500ms var(--ease-quiet);
+}
+.dining__img:hover img { transform: scale(1.04); }
+.dining__caption {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-top: -0.5rem;
+}
+.dining__menu {
+  margin-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.dining__menu-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--line-soft);
+  align-items: baseline;
+}
+.dining__menu-name {
+  font-family: var(--serif);
+  font-size: 1.125rem;
+}
+.dining__menu-desc {
+  font-size: 0.85rem;
+  color: var(--text-mute);
+  margin-top: 0.25rem;
+}
+.dining__menu-price {
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+@media (max-width: 980px) {
+  .dining__inner { grid-template-columns: 1fr; gap: 3rem; }
+  .dining__left { position: static; }
+}
+
+/* ========================================================================
+   AMENITIES GRID
+   ======================================================================== */
+.amenities__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+  margin-top: 4rem;
+}
+.amenity {
+  background: var(--bg);
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  transition: background 600ms var(--ease-quiet);
+  min-height: 280px;
+}
+.amenity:hover { background: var(--bg-soft); }
+.amenity__num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+}
+.amenity__name {
+  font-family: var(--serif);
+  font-size: 1.375rem;
+  line-height: 1.2;
+  margin-top: auto;
+}
+.amenity__desc {
+  font-size: 0.875rem;
+  color: var(--text-mute);
+  line-height: 1.7;
+}
+@media (max-width: 980px) { .amenities__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .amenities__grid { grid-template-columns: 1fr; } }
+
+/* ========================================================================
+   GALLERY (scroll-snap carousel with arrows)
+   ======================================================================== */
+.gallery { background: var(--bg-soft); }
+.gallery__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 4rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.gallery__title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+  margin-top: 2rem;
+}
+.gallery__controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.gallery__counter {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--text-mute);
+  margin-right: 1rem;
+}
+.gallery__counter span { color: var(--accent); }
+.gallery__arrow {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 500ms var(--ease-quiet);
+  position: relative;
+}
+.gallery__arrow:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.gallery__arrow::before {
+  content: '';
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+  position: absolute;
+}
+.gallery__arrow::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  position: absolute;
+}
+.gallery__arrow--prev::after { transform: rotate(-135deg); left: 14px; }
+.gallery__arrow--next::after { transform: rotate(45deg); right: 14px; }
+.gallery__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.gallery__viewport::-webkit-scrollbar { display: none; }
+.gallery__track {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+.gallery__item {
+  flex-shrink: 0;
+  width: 480px;
+  height: 600px;
+  scroll-snap-align: start;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--line-soft);
+}
+.gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1500ms var(--ease-quiet);
+}
+.gallery__item:hover img { transform: scale(1.04); }
+.gallery__item-label {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  padding: 0.5rem 0.875rem;
+  background: rgba(10,10,10,0.85);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent-soft);
+}
+.gallery__item--tall { height: 600px; }
+.gallery__item--wide { width: 720px; }
+@media (max-width: 768px) {
+  .gallery__item { width: 80vw; height: 480px; }
+  .gallery__item--wide { width: 80vw; }
+}
+
+/* ========================================================================
+   REVIEWS
+   ======================================================================== */
+.reviews__top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+  margin-bottom: 5rem;
+}
+.reviews__title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+  margin-top: 2rem;
+}
+.reviews__score {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  border-left: 1px solid var(--line);
+  padding-left: 2.5rem;
+}
+.reviews__score-num {
+  font-family: var(--serif);
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.reviews__score-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.reviews__score-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.reviews__score-source {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-soft);
+}
+.reviews__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line-soft);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+.review {
+  background: var(--bg);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.review__quote {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+.review__quote::before {
+  content: '« ';
+  color: var(--accent);
+}
+.review__quote::after {
+  content: ' »';
+  color: var(--accent);
+}
+.review__author {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+}
+.review__name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.0625rem;
+}
+.review__date {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+@media (max-width: 768px) {
+  .reviews__top { grid-template-columns: 1fr; gap: 2rem; }
+  .reviews__score { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 2rem; }
+  .reviews__list { grid-template-columns: 1fr; }
+  .review { padding: 2rem; }
+}
+
+/* ========================================================================
+   LOCATION
+   ======================================================================== */
+.location__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: stretch;
+}
+.location__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 2rem 0;
+}
+.location__title {
+  font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+  line-height: 1.1;
+  margin-top: 2rem;
+}
+.location__lede {
+  color: var(--text-soft);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.location__details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 2.5rem;
+}
+.location__detail {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.5rem;
+  align-items: baseline;
+}
+.location__detail-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.location__detail-value {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+}
+.location__map {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  position: relative;
+}
+.location__map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: invert(0.92) hue-rotate(180deg) brightness(0.95) contrast(0.9) grayscale(0.3);
+}
+@media (max-width: 980px) {
+  .location__inner { grid-template-columns: 1fr; }
+  .location__map { min-height: 360px; }
+}
+
+/* ========================================================================
+   RESERVATION
+   ======================================================================== */
+.reserve { background: var(--bg-soft); }
+.reserve__inner {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  text-align: center;
+}
+.reserve__title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+.reserve__lede {
+  color: var(--text-soft);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  max-width: 56ch;
+  margin: 0 auto 4rem;
+}
+.reserve__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+  text-align: left;
+}
+.field {
+  background: var(--bg);
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+}
+.field--full { grid-column: 1 / -1; }
+.field__label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.field__input,
+.field__select,
+.field__textarea {
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  width: 100%;
+  padding: 0.25rem 0;
+  cursor: pointer;
+}
+.field__textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.field__input::placeholder,
+.field__textarea::placeholder { color: var(--text-mute); font-style: italic; }
+.field__select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3e%3cpath fill='%23c8aa82' d='M0 0l5 6 5-6z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 1.5rem;
+}
+.field__select option { background: var(--bg); color: var(--text); }
+.reserve__submit {
+  grid-column: 1 / -1;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 1.5rem;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 500ms var(--ease-quiet), color 500ms var(--ease-quiet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border-top: 1px solid var(--line-soft);
+}
+.reserve__submit:hover {
+  background: var(--bg);
+  color: var(--accent);
+}
+.reserve__confirmation {
+  display: none;
+  text-align: center;
+  padding: 4rem 2rem;
+  border: 1px solid var(--accent-soft);
+  background: var(--bg);
+}
+.reserve__confirmation.is-visible {
+  display: block;
+  animation: fadeUp 800ms var(--ease-quiet);
+}
+.reserve__confirmation-icon {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 1.5rem;
+}
+.reserve__confirmation-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.reserve__confirmation-text {
+  color: var(--text-soft);
+  max-width: 48ch;
+  margin: 0 auto;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 768px) {
+  .reserve__form { grid-template-columns: 1fr; }
+}
+
+/* ========================================================================
+   FOOTER
+   ======================================================================== */
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 6rem 0 2rem;
+}
+.footer__inner {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.footer__top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 4rem;
+  padding-bottom: 5rem;
+  border-bottom: 1px solid var(--line);
+}
+.footer__brand-name {
+  font-family: var(--serif);
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+.footer__brand-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-bottom: 2rem;
+}
+.footer__brand-desc {
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  max-width: 40ch;
+}
+.footer__col-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+.footer__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+.footer__list a {
+  color: var(--text-soft);
+  font-size: 0.9375rem;
+  transition: color 400ms var(--ease-quiet);
+}
+.footer__list a:hover { color: var(--accent); }
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+@media (max-width: 980px) {
+  .footer__top { grid-template-columns: 1fr 1fr; gap: 3rem; }
+}
+@media (max-width: 560px) {
+  .footer__top { grid-template-columns: 1fr; }
+}
+
+/* ========================================================================
+   REVEAL ANIMATION STATES
+   ======================================================================== */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1000ms var(--ease-quiet, cubic-bezier(.22,1,.36,1)),
+              transform 1000ms var(--ease-quiet, cubic-bezier(.22,1,.36,1));
+  will-change: transform, opacity;
+}
+[data-reveal].is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-reveal-stagger] > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 900ms var(--ease-quiet),
+              transform 900ms var(--ease-quiet);
+}
+[data-reveal-stagger].is-in > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal], [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hero__media img { animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="#top" class="nav__brand">
+      <span class="nav__brand-name">STAR LAND</span>
+      <span class="nav__brand-loc">BASTOS · YAOUNDÉ</span>
+    </a>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="#about">L'hôtel</a></li>
+      <li><a href="#rooms">Chambres</a></li>
+      <li><a href="#dining">Restauration</a></li>
+      <li><a href="#amenities">Équipements</a></li>
+      <li><a href="#gallery">Galerie</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#reserve" class="nav__cta">Réserver</a>
+    <div class="nav__burger" id="navBurger"><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero" id="top">
+  <div class="hero__media">
+    <img src="https://picsum.photos/seed/starland-hotel-facade-night/1920/1200" alt="Façade de Star Land Hotel Bastos au crépuscule" />
+  </div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <div class="hero__eyebrow" id="heroEyebrow">
+      <span>YAOUNDÉ</span><span>BASTOS</span><span>CAMEROUN</span>
+    </div>
+    <h1 class="hero__title">
+      <span class="line-mask"><span class="line" data-hero-line="1">L'art de recevoir,</span></span>
+      <span class="line-mask"><span class="line italic" data-hero-line="2">à la camerounaise.</span></span>
+    </h1>
+    <p class="hero__sub" id="heroSub">
+      Quatre-vingt-quatre chambres & suites, un restaurant gastronomique, et le silence d'un jardin à dix minutes du centre-ville. Depuis 2009, une maison où le temps ralentit.
+    </p>
+    <div class="hero__cta" id="heroCta">
+      <a href="#reserve" class="btn btn--primary">Réserver une chambre <span class="btn__arrow"></span></a>
+      <a href="#about" class="btn btn--ghost">Découvrir l'hôtel</a>
+    </div>
+    <div class="hero__meta" id="heroMeta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-num">4.3</span>
+        <span class="hero__meta-label">Note Google</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-num">688</span>
+        <span class="hero__meta-label">Avis vérifiés</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-num">84</span>
+        <span class="hero__meta-label">Chambres & suites</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero__scroll">
+    <span class="hero__scroll-text">Défiler</span>
+    <span class="hero__scroll-line"></span>
+  </div>
+</header>
+
+<!-- ============================================================
+     ABOUT / INTRO (sticky two-column)
+     ============================================================ -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about__inner">
+      <div class="about__left" data-reveal>
+        <span class="eyebrow">Philosophie</span>
+        <h2 class="about__title">Une maison où le temps <span class="italic">ralentit</span>.</h2>
+        <p class="about__lede">
+          Star Land Hotel Bastos a ouvert en 2009 dans le quartier diplomatique de Yaoundé. Une maison familiale, tenue par la même équipe depuis l'origine, qui a choisi de grandir lentement plutôt que de s'agrandir vite.
+        </p>
+        <p class="about__lede">
+          Quatre-vingt-quatre chambres, deux restaurants, un spa, une piscine, et trois salles de réunion. Rien de plus que ce qui se fait bien. L'accueil est camerounais — direct, chaleureux, sans cérémonie. Le reste, la literie, les draps, les produits de toilette, le silence, est pensé pour qu'on dorme, qu'on travaille, qu'on revienne.
+        </p>
+        <div class="about__signature">
+          <div>
+            <div class="about__signature-name">Joachim Mbarga</div>
+            <div class="about__signature-role">Directeur général</div>
+          </div>
+        </div>
+      </div>
+      <div class="about__right">
+        <div class="about__block" data-reveal>
+          <div class="about__block-img">
+            <img src="../Images_compressed/image18.webp" alt="Hall de réception de Star Land Hotel" />
+          </div>
+          <span class="about__block-caption">Hall de réception · Bastos</span>
+          <p class="about__block-text">
+            Le hall ouvre sur un patio planté d'irokos. À l'arrivée, on vous propose un jus de bissap frais et un linge frais. Le check-in prend trois minutes.
+          </p>
+        </div>
+        <div class="about__block" data-reveal>
+          <div class="about__block-img">
+            <img src="../Images_compressed/image17.webp" alt="Jardin intérieur de l'hôtel" />
+          </div>
+          <span class="about__block-caption">Jardin intérieur · 1 200 m²</span>
+          <p class="about__block-text">
+            Le jardin est ouvert jusqu'à 23h. On y sert le thé l'après-midi, et les cigares le soir. Les chambres donnent dessus ou sur la ville.
+          </p>
+        </div>
+        <div class="about__block" data-reveal>
+          <div class="about__block-img">
+            <img src="../Images_compressed/image16.webp" alt="Détail d'une suite en marbre" />
+          </div>
+          <span class="about__block-caption">Suite Présidentielle · détail</span>
+          <p class="about__block-text">
+            Les marbres viennent de Bembèlè. Les bois sont locaux. Les draps sont en percale de coton égyptien, 600 grammes. Rien n'est importé qui puisse être trouvé ici.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATS
+     ============================================================ -->
+<section class="stats" data-reveal-stagger>
+  <div class="stats__inner">
+    <div class="stats__item">
+      <div class="stats__num" data-counter="4.3" data-decimals="1">0</div>
+      <div class="stats__label">Note moyenne Google</div>
+    </div>
+    <div class="stats__item">
+      <div class="stats__num" data-counter="688" data-suffix=" avis">0</div>
+      <div class="stats__label">Avis voyageurs vérifiés</div>
+    </div>
+    <div class="stats__item">
+      <div class="stats__num" data-counter="84">0</div>
+      <div class="stats__label">Chambres & suites</div>
+    </div>
+    <div class="stats__item">
+      <div class="stats__num" data-counter="15" data-suffix=" ans">0</div>
+      <div class="stats__label">Au service de Yaoundé</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SERVICES (hover row accent bar)
+     ============================================================ -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="eyebrow">Services de l'hôtel</span>
+      <h2 class="section-header__title">Tout ce qu'il faut, <span class="italic">rien de superflu.</span></h2>
+      <p class="section-header__sub">
+        Douze services pensés pour le voyage d'affaires comme pour le séjour privé. Chacun tenu par une équipe dédiée, avec des horaires clairs et un numéro direct.
+      </p>
+    </div>
+    <div class="services__list" data-reveal-stagger>
+      <div class="service-row">
+        <div class="service-row__num">01</div>
+        <div class="service-row__title">Réception 24/7</div>
+        <div class="service-row__desc">Une présence humaine à toute heure. Pour le late check-in, le départ matinal, le besoin imprévu. Français, anglais, allemand.</div>
+        <div class="service-row__hours">24h/24</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">02</div>
+        <div class="service-row__title">Restaurant gastronomique</div>
+        <div class="service-row__desc">Cuisine franco-camerounaise signée par le chef Emmanuel Onana. Produits du marché de Mokolo, carte des vins de 120 références.</div>
+        <div class="service-row__hours">12h–14h30 · 19h–22h30</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">03</div>
+        <div class="service-row__title">Bar lounge</div>
+        <div class="service-row__desc">Cocktail signature Star Land au baobab, whiskies, rhums arrangés. Piano les jeudis, jazz trio les samedis.</div>
+        <div class="service-row__hours">17h–1h</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">04</div>
+        <div class="service-row__title">Piscine extérieure</div>
+        <div class="service-row__desc">Dix-huit mètres, eau à 28°, transats, serviettes, bar de piscine. Ouverte aux résidents et à leurs invités.</div>
+        <div class="service-row__hours">6h–21h</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">05</div>
+        <div class="service-row__title">Spa & bien-être</div>
+        <div class="service-row__desc">Massage camerounais aux huiles de karité, hammam, soins du visage, manucure. Trois cabines, sur rendez-vous.</div>
+        <div class="service-row__hours">10h–20h</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">06</div>
+        <div class="service-row__title">Salle de fitness</div>
+        <div class="service-row__desc">Technogym dernier plateau, cardio et force, salle de stretching. Serviettes et eau fraîche à disposition.</div>
+        <div class="service-row__hours">6h–22h</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">07</div>
+        <div class="service-row__title">Salles de conférence</div>
+        <div class="service-row__desc">Trois salles modulables de 8 à 120 personnes. Écrans 4K, fibre dédiée, paperboard, traiteur, hôtesse sur demande.</div>
+        <div class="service-row__hours">7h–21h</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">08</div>
+        <div class="service-row__title">Service de blanchisserie</div>
+        <div class="service-row__desc">Lavage, repassage, nettoyage à sec. Retour sous 24h, express sous 4h. Dépositaire dans chaque étage.</div>
+        <div class="service-row__hours">7h–19h</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">09</div>
+        <div class="service-row__title">Navette aéroport</div>
+        <div class="service-row__desc">Aéroport international de Nsimalen, 35 minutes. Véhicules privés, climatisés, eau à bord. Sur réservation 24h avant.</div>
+        <div class="service-row__hours">Sur réservation</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">10</div>
+        <div class="service-row__title">WiFi haut débit</div>
+        <div class="service-row__desc">Fibre optique 500 Mbps, couverture totale de l'établissement, WiFi dédié en salle de conférence. Gratuit.</div>
+        <div class="service-row__hours">24h/24</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">11</div>
+        <div class="service-row__title">Parking sécurisé</div>
+        <div class="service-row__desc">Quatre-vingts places gardiennées, vidéosurveillance, accès par badge. Pour voitures particulières et utilitaires.</div>
+        <div class="service-row__hours">24h/24</div>
+      </div>
+      <div class="service-row">
+        <div class="service-row__num">12</div>
+        <div class="service-row__title">Petit-déjeuner buffet</div>
+        <div class="service-row__desc">Viennoiseries, fruits, œufs, spécialités locales (plantain, haricot, beignets), café d'Éthiopie, thé de Bingerville.</div>
+        <div class="service-row__hours">6h–10h30</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ROOMS (horizontal pin-scroll)
+     ============================================================ -->
+<section class="rooms" id="rooms">
+  <div class="rooms__intro">
+    <div class="rooms__intro-inner">
+      <div data-reveal>
+        <span class="eyebrow">Chambres & suites</span>
+        <h2 class="rooms__title">Cinq catégories,<br/>une seule <span class="italic">exigence.</span></h2>
+      </div>
+      <div class="rooms__intro-text" data-reveal>
+        De la Chambre Standard à la Suite Présidentielle, tout est pensé pour le sommeil, le silence, et la lumière. Les draps sont en percale 600 grammes, les matelas à memoire de forme, les rideaux occultants. Chaque chambre a son bureau, sa connexion fibre, et son service d'étage jusqu'à 23h.
+      </div>
+    </div>
+  </div>
+  <div class="rooms__viewport" id="roomsViewport">
+    <div class="rooms__track" id="roomsTrack">
+
+      <article class="room-card">
+        <div class="room-card__media">
+          <img src="../Images_compressed/image15.webp" alt="Chambre Standard" />
+          <span class="room-card__tag">Standard</span>
+        </div>
+        <div class="room-card__body">
+          <h3 class="room-card__name">Chambre Standard</h3>
+          <div class="room-card__meta"><span>28 m²</span><span>1 lit queen</span><span>Vue jardin</span></div>
+          <p class="room-card__desc">Pour le voyageur seul ou en couple. Le minimum nécessaire, fait avec soin : bureau, salle de bain en marbre, WiFi fibre, TV satellite.</p>
+          <div class="room-card__footer">
+            <div class="room-card__price">
+              <span class="room-card__price-num">65 000</span>
+              <span class="room-card__price-unit">FCFA / nuit</span>
+            </div>
+            <a href="#reserve" class="room-card__link">Réserver →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="room-card">
+        <div class="room-card__media">
+          <img src="../Images_compressed/image14.webp" alt="Chambre Deluxe" />
+          <span class="room-card__tag">Deluxe</span>
+        </div>
+        <div class="room-card__body">
+          <h3 class="room-card__name">Chambre Deluxe</h3>
+          <div class="room-card__meta"><span>35 m²</span><span>1 lit king</span><span>Vue ville</span></div>
+          <p class="room-card__desc">Plus d'espace, plus de lumière, un coin salon pour s'asseoir et défaire la journée. Mini-bar, machine à café, peignoirs.</p>
+          <div class="room-card__footer">
+            <div class="room-card__price">
+              <span class="room-card__price-num">95 000</span>
+              <span class="room-card__price-unit">FCFA / nuit</span>
+            </div>
+            <a href="#reserve" class="room-card__link">Réserver →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="room-card">
+        <div class="room-card__media">
+          <img src="../Images_compressed/image13.webp" alt="Suite Junior" />
+          <span class="room-card__tag">Suite Junior</span>
+        </div>
+        <div class="room-card__body">
+          <h3 class="room-card__name">Suite Junior</h3>
+          <div class="room-card__meta"><span>48 m²</span><span>1 lit king</span><span>Salon séparé</span></div>
+          <p class="room-card__desc">Une chambre et un salon, pour s'installer plusieurs nuits sans se sentir camper. Walk-in closet, baignoire, bureau.</p>
+          <div class="room-card__footer">
+            <div class="room-card__price">
+              <span class="room-card__price-num">145 000</span>
+              <span class="room-card__price-unit">FCFA / nuit</span>
+            </div>
+            <a href="#reserve" class="room-card__link">Réserver →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="room-card">
+        <div class="room-card__media">
+          <img src="../Images_compressed/image12.webp" alt="Suite Exécutive" />
+          <span class="room-card__tag">Exécutive</span>
+        </div>
+        <div class="room-card__body">
+          <h3 class="room-card__name">Suite Exécutive</h3>
+          <div class="room-card__meta"><span>65 m²</span><span>2 pièces</span><span>Lounge privé</span></div>
+          <p class="room-card__desc">Chambre, salon et salle à manger privée. Accès au lounge exécutif, petit-déjeuner servi à l'étage. Pour qui voyage en famille ou reçoit.</p>
+          <div class="room-card__footer">
+            <div class="room-card__price">
+              <span class="room-card__price-num">220 000</span>
+              <span class="room-card__price-unit">FCFA / nuit</span>
+            </div>
+            <a href="#reserve" class="room-card__link">Réserver →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="room-card">
+        <div class="room-card__media">
+          <img src="../Images_compressed/image11.webp" alt="Suite Présidentielle" />
+          <span class="room-card__tag">Présidentielle</span>
+        </div>
+        <div class="room-card__body">
+          <h3 class="room-card__name">Suite Présidentielle</h3>
+          <div class="room-card__meta"><span>120 m²</span><span>2 chambres</span><span>Terrasse privée</span></div>
+          <p class="room-card__desc">Au dernier étage, vue panoramique sur Yaoundé. Deux chambres, salon, salle à manger, terrasse, majordome dédié 24h/24.</p>
+          <div class="room-card__footer">
+            <div class="room-card__price">
+              <span class="room-card__price-num">450 000</span>
+              <span class="room-card__price-unit">FCFA / nuit</span>
+            </div>
+            <a href="#reserve" class="room-card__link">Réserver →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <div class="rooms__progress"><div class="rooms__progress-bar" id="roomsProgressBar"></div></div>
+    <div class="rooms__hint">Défiler →</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DINING (sticky two-column)
+     ============================================================ -->
+<section class="dining" id="dining">
+  <div class="container">
+    <div class="dining__inner">
+      <div class="dining__left" data-reveal>
+        <span class="eyebrow">Restauration</span>
+        <h2 class="dining__title">Le restaurant <span class="italic">Le Bastos</span>.</h2>
+        <p class="dining__lede">
+          Carte courte, produits du marché, cuisson précise. Le chef Emmanuel Onana travaille la cuisine camerounaise avec une technique française — Ndolè en feuille de brick, poulet DG confit, poisson braisé au piment doux. La carte change toutes les six semaines, le menu dégustation tous les quinze jours.
+        </p>
+        <p class="dining__lede">
+          Cent vingt références de vin, moitié françaises, moitié africaines (Côte d'Ivoire, Afrique du Sud, Maroc). Service par sommelier.
+        </p>
+        <div class="dining__hours">
+          <div class="dining__hours-row"><span>Petit-déjeuner</span><span>06h00 — 10h30</span></div>
+          <div class="dining__hours-row"><span>Déjeuner</span><span>12h00 — 14h30</span></div>
+          <div class="dining__hours-row"><span>Dîner</span><span>19h00 — 22h30</span></div>
+          <div class="dining__hours-row"><span>Room service</span><span>06h00 — 23h00</span></div>
+        </div>
+      </div>
+      <div class="dining__right">
+        <div data-reveal>
+          <div class="dining__img dining__img--wide">
+            <img src="../Images_compressed/image10.webp" alt="Salle du restaurant Le Bastos" />
+          </div>
+          <p class="dining__caption">Salle principale · 48 couverts</p>
+        </div>
+
+        <div data-reveal>
+          <h3 style="font-family: var(--serif); font-size: 1.5rem; margin-bottom: 1.5rem; padding-top: 2rem; border-top: 1px solid var(--line);">Extrait de la carte</h3>
+          <div class="dining__menu">
+            <div class="dining__menu-row">
+              <div>
+                <div class="dining__menu-name">Ndolè aux crevettes de Limbé</div>
+                <div class="dining__menu-desc">Feuilles de ndolè, arachides torréfiées, crevettes fraîches, riz au gras</div>
+              </div>
+              <div class="dining__menu-price">12 500 F</div>
+            </div>
+            <div class="dining__menu-row">
+              <div>
+                <div class="dining__menu-name">Poulet DG confit, plantain glacé</div>
+                <div class="dining__menu-desc">Cuisse confite 6h, plantain mûr, sauce tomate maison</div>
+              </div>
+              <div class="dining__menu-price">9 800 F</div>
+            </div>
+            <div class="dining__menu-row">
+              <div>
+                <div class="dining__menu-name">Bar braisé, sauce au piment doux</div>
+                <div class="dining__menu-desc">Bar de Kribi, braise de charbon, attiéké, oignon rouge</div>
+              </div>
+              <div class="dining__menu-price">15 000 F</div>
+            </div>
+            <div class="dining__menu-row">
+              <div>
+                <div class="dining__menu-name">Menu dégustation 5 services</div>
+                <div class="dining__menu-desc">Composition du chef, accord mets-vins en supplément</div>
+              </div>
+              <div class="dining__menu-price">38 000 F</div>
+            </div>
+          </div>
+        </div>
+
+        <div data-reveal>
+          <div class="dining__img dining__img--tall" style="margin-top: 2rem;">
+            <img src="../Images_compressed/image9.webp" alt="Bar lounge Le Bastos" />
+          </div>
+          <p class="dining__caption">Bar lounge · 24 places</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     AMENITIES GRID
+     ============================================================ -->
+<section class="amenities" id="amenities">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="eyebrow">Équipements</span>
+      <h2 class="section-header__title">Les espaces <span class="italic">communs.</span></h2>
+      <p class="section-header__sub">
+        Au-delà de la chambre, huit lieux pour travailler, se détendre, se réunir. Tous accessibles aux résidents 24h/24, sur badge.
+      </p>
+    </div>
+    <div class="amenities__grid" data-reveal-stagger>
+      <div class="amenity">
+        <div class="amenity__num">A · 01</div>
+        <p class="amenity__desc">Dix-huit mètres, quatre lignes d'eau, profondeur progressive. Vestiaires, douches, serviettes.</p>
+        <h3 class="amenity__name">Piscine extérieure</h3>
+      </div>
+      <div class="amenity">
+        <div class="amenity__num">A · 02</div>
+        <p class="amenity__desc">Trois cabines de soin, hammam, salle de relaxation. Huiles de karité et de baobab.</p>
+        <h3 class="amenity__name">Spa & hammam</h3>
+      </div>
+      <div class="amenity">
+        <div class="amenity__num">A · 03</div>
+        <p class="amenity__desc">Plateau Technogym complet, cardio, force, stretching. Salle privée pour coach.</p>
+        <h3 class="amenity__name">Salle de fitness</h3>
+      </div>
+      <div class="amenity">
+        <div class="amenity__num">A · 04</div>
+        <p class="amenity__desc">Trois salles modulables : 8, 30 et 120 personnes. Écrans 4K, fibre dédiée, paperboard.</p>
+        <h3 class="amenity__name">Salles de conférence</h3>
+      </div>
+      <div class="amenity">
+        <div class="amenity__num">A · 05</div>
+        <p class="amenity__desc">Quarante-huit couverts, cuisine ouverte, terrasse couverte, cave vitrine.</p>
+        <h3 class="amenity__name">Restaurant Le Bastos</h3>
+      </div>
+      <div class="amenity">
+        <div class="amenity__num">A · 06</div>
+        <p class="amenity__desc">Vingt-quatre places, piano les jeudis, jazz trio les samedis. Cave à cigares.</p>
+        <h3 class="amenity__name">Bar lounge</h3>
+      </div>
+      <div class="amenity">
+        <div class="amenity__num">A · 07</div>
+        <p class="amenity__desc">Jardin planté d'irokos, patio central, terrasse, salon de thé jusqu'à 23h.</p>
+        <h3 class="amenity__name">Jardin & patio</h3>
+      </div>
+      <div class="amenity">
+        <div class="amenity__num">A · 08</div>
+        <p class="amenity__desc">Quatre-vingts places gardiennées, vidéosurveillance, recharge véhicules électriques.</p>
+        <h3 class="amenity__name">Parking sécurisé</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GALLERY
+     ============================================================ -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="gallery__top">
+      <div data-reveal>
+        <span class="eyebrow">Galerie</span>
+        <h2 class="gallery__title">L'hôtel en <span class="italic">huit images.</span></h2>
+      </div>
+      <div class="gallery__controls" data-reveal>
+        <div class="gallery__counter"><span id="galleryCurrent">01</span> / 08</div>
+        <div class="gallery__arrow gallery__arrow--prev" id="galleryPrev"></div>
+        <div class="gallery__arrow gallery__arrow--next" id="galleryNext"></div>
+      </div>
+    </div>
+  </div>
+  <div class="gallery__viewport" id="galleryViewport">
+    <div class="gallery__track" id="galleryTrack">
+      <div class="gallery__item">
+        <img src="../Autres Images/FACADE2." alt="Façade principale" />
+        <span class="gallery__item-label">01 · Façade</span>
+      </div>
+      <div class="gallery__item gallery__item--wide">
+        <img src="../Autres Images/HALL." alt="Hall de réception" />
+        <span class="gallery__item-label">02 · Hall</span>
+      </div>
+      <div class="gallery__item">
+        <img src="../Autres Images/RESTAURANT." alt="Restaurant Le Bastos" />
+        <span class="gallery__item-label">03 · Restaurant</span>
+      </div>
+      <div class="gallery__item">
+        <img src="../Images_compressed/image4.webp" alt="Suite Présidentielle" />
+        <span class="gallery__item-label">04 · Suite</span>
+      </div>
+      <div class="gallery__item gallery__item--wide">
+        <img src="../Autres Images/PISCINE." alt="Piscine au crépuscule" />
+        <span class="gallery__item-label">05 · Piscine</span>
+      </div>
+      <div class="gallery__item">
+        <img src="../Autres Images/SPA." alt="Spa & hammam" />
+        <span class="gallery__item-label">06 · Spa</span>
+      </div>
+      <div class="gallery__item">
+        <img src="../Autres Images/CONFERENCE2." alt="Salle de conférence" />
+        <span class="gallery__item-label">07 · Conférence</span>
+      </div>
+      <div class="gallery__item gallery__item--wide">
+        <img src="../Autres Images/TERRASSE2." alt="Terrasse et jardin" />
+        <span class="gallery__item-label">08 · Terrasse</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     REVIEWS
+     ============================================================ -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="reviews__top">
+      <div data-reveal>
+        <span class="eyebrow">Avis voyageurs</span>
+        <h2 class="reviews__title">Ce que disent <span class="italic">ceux qui reviennent.</span></h2>
+      </div>
+      <div class="reviews__score" data-reveal>
+        <div class="reviews__score-num">4.3</div>
+        <div class="reviews__score-meta">
+          <span class="reviews__score-label">Note moyenne</span>
+          <span class="reviews__score-source">688 avis Google · 312 avis Tripadvisor</span>
+        </div>
+      </div>
+    </div>
+    <div class="reviews__list" data-reveal-stagger>
+      <div class="review">
+        <p class="review__quote">Une maison où l'on se sent attendu. La chambre était prête avant l'heure, le restaurant excellent, et le personnel d'une discrétion parfaite. Quatre nuits, je reviendrai.</p>
+        <div class="review__author">
+          <span class="review__name">A. Mbarga</span>
+          <span class="review__date">Voyage d'affaires · 03/2024</span>
+        </div>
+      </div>
+      <div class="review">
+        <p class="review__quote">Le meilleur hôtel de Bastos, sans conteste. La suite exécutive donne sur la ville, le petit-déjeuner est généreux, et la piscine reste ouverte tard. Service irréprochable.</p>
+        <div class="review__author">
+          <span class="review__name">C. Eyenga</span>
+          <span class="review__date">Séjour famille · 01/2024</span>
+        </div>
+      </div>
+      <div class="review">
+        <p class="review__quote">Pour un séminaire de quarante personnes : salles impeccables, déjeuners à l'heure, et une équipe qui a anticipé chaque besoin. On reviendra l'an prochain.</p>
+        <div class="review__author">
+          <span class="review__name">F. Ngono</span>
+          <span class="review__date">Séminaire entreprise · 11/2023</span>
+        </div>
+      </div>
+      <div class="review">
+        <p class="review__quote">L'accueil dès l'aéroport, le sourire à la réception, le café à 6h du matin. Tout est juste. Et le silence, le soir, dans les jardins. Une parenthèse.</p>
+        <div class="review__author">
+          <span class="review__name">M. Talla</span>
+          <span class="review__date">Séjour privé · 02/2024</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LOCATION
+     ============================================================ -->
+<section class="location" id="location">
+  <div class="container">
+    <div class="location__inner">
+      <div class="location__info" data-reveal>
+        <span class="eyebrow">Localisation</span>
+        <h2 class="location__title">Au cœur de <span class="italic">Bastos.</span></h2>
+        <p class="location__lede">
+          Le quartier diplomatique de Yaoundé. Ambassades, institutions, sociétés pétrolières, à dix minutes du Palais des Congrès et du centre des affaires. Aéroport de Nsimalen à 35 minutes par la route.
+        </p>
+        <div class="location__details">
+          <div class="location__detail">
+            <span class="location__detail-label">Adresse</span>
+            <span class="location__detail-value">Bastos, Yaoundé III, Cameroun</span>
+          </div>
+          <div class="location__detail">
+            <span class="location__detail-label">Téléphone</span>
+            <span class="location__detail-value">6 71 00 08 88</span>
+          </div>
+          <div class="location__detail">
+            <span class="location__detail-label">Site web</span>
+            <span class="location__detail-value">www.starlandhotel.com</span>
+          </div>
+          <div class="location__detail">
+            <span class="location__detail-label">Aéroport</span>
+            <span class="location__detail-value">Nsimalen · 35 min</span>
+          </div>
+          <div class="location__detail">
+            <span class="location__detail-label">Centre-ville</span>
+            <span class="location__detail-value">Place de l'Indépendance · 12 min</span>
+          </div>
+        </div>
+      </div>
+      <div class="location__map" data-reveal>
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=11.4871%2C3.8716%2C11.5471%2C3.9116&amp;layer=mapnik&amp;marker=3.8916%2C11.5171"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation Star Land Hotel Bastos">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESERVATION
+     ============================================================ -->
+<section class="reserve" id="reserve">
+  <div class="container">
+    <div class="reserve__inner">
+      <div data-reveal>
+        <span class="eyebrow">Réservation</span>
+        <h2 class="reserve__title">Réserver <span class="italic">une chambre.</span></h2>
+        <p class="reserve__lede">
+          Réservation directe, sans intermédiaire, au meilleur tarif garanti. Confirmation sous deux heures ouvrées par notre réception. Pour les séjours de groupe ou les réservations entreprises, contactez la direction à l'adresse indiquée plus bas.
+        </p>
+      </div>
+
+      <form class="reserve__form" id="reserveForm" data-reveal>
+        <div class="field">
+          <label class="field__label" for="checkin">Arrivée</label>
+          <input type="date" class="field__input" id="checkin" name="checkin" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="checkout">Départ</label>
+          <input type="date" class="field__input" id="checkout" name="checkout" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="guests">Voyageurs</label>
+          <select class="field__select" id="guests" name="guests">
+            <option>1 adulte</option>
+            <option selected>2 adultes</option>
+            <option>2 adultes · 1 enfant</option>
+            <option>2 adultes · 2 enfants</option>
+            <option>3 adultes</option>
+            <option>4 adultes</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label" for="roomType">Catégorie</label>
+          <select class="field__select" id="roomType" name="roomType">
+            <option>Chambre Standard — 65 000 F</option>
+            <option>Chambre Deluxe — 95 000 F</option>
+            <option>Suite Junior — 145 000 F</option>
+            <option>Suite Exécutive — 220 000 F</option>
+            <option>Suite Présidentielle — 450 000 F</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label" for="name">Nom complet</label>
+          <input type="text" class="field__input" id="name" name="name" placeholder="Prénom et nom" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="email">Email</label>
+          <input type="email" class="field__input" id="email" name="email" placeholder="vous@exemple.com" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="phone">Téléphone</label>
+          <input type="tel" class="field__input" id="phone" name="phone" placeholder="+237 ··· ··· ···" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="requests">Demande particulière</label>
+          <select class="field__select" id="requests" name="requests">
+            <option>Aucune</option>
+            <option>Étage élevé</option>
+            <option>Lit king-size</option>
+            <option>Chambre calme</option>
+            <option>Navette aéroport</option>
+            <option>Anniversaire / occasion</option>
+          </select>
+        </div>
+        <div class="field field--full">
+          <label class="field__label" for="message">Message (optionnel)</label>
+          <textarea class="field__textarea" id="message" name="message" placeholder="Heure d'arrivée, régime alimentaire, demande de hôtel..."></textarea>
+        </div>
+        <button type="submit" class="reserve__submit">
+          Confirmer la demande <span class="btn__arrow"></span>
+        </button>
+      </form>
+
+      <div class="reserve__confirmation" id="reserveConfirmation">
+        <div class="reserve__confirmation-icon">✓</div>
+        <h3 class="reserve__confirmation-title">Demande reçue.</h3>
+        <p class="reserve__confirmation-text">
+          Notre réception vous confirme la disponibilité et le tarif par email sous deux heures ouvrées. Pour toute demande immédiate, téléphonez au <span style="color: var(--accent);">6 71 00 08 88</span>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer" id="contact">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <div>
+        <div class="footer__brand-name">STAR LAND</div>
+        <div class="footer__brand-tag">Hôtel Bastos · Yaoundé · Cameroun</div>
+        <p class="footer__brand-desc">
+          Une maison familiale tenue depuis 2009. Quatre-vingt-quatre chambres, un restaurant, un spa, et le souci du détail. Note 4,3 sur Google — 688 avis vérifiés.
+        </p>
+      </div>
+      <div>
+        <div class="footer__col-title">Navigation</div>
+        <ul class="footer__list">
+          <li><a href="#about">L'hôtel</a></li>
+          <li><a href="#rooms">Chambres</a></li>
+          <li><a href="#dining">Restauration</a></li>
+          <li><a href="#amenities">Équipements</a></li>
+          <li><a href="#gallery">Galerie</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Contact</div>
+        <ul class="footer__list">
+          <li><a href="tel:+237671000888">6 71 00 08 88</a></li>
+          <li><a href="https://www.starlandhotel.com">www.starlandhotel.com</a></li>
+          <li>Bastos, Yaoundé III</li>
+          <li>Réception 24h/24</li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Légal</div>
+        <ul class="footer__list">
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Conditions générales</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 STAR LAND HOTEL BASTOS · TOUS DROITS RÉSERVÉS</span>
+      <span>YAOUNDÉ · CAMEROUN</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ========================================================================
+   INITIALISATION LENIS + GSAP
+   ======================================================================== */
+gsap.registerPlugin(ScrollTrigger);
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+let lenis;
+if (!prefersReducedMotion && typeof Lenis !== 'undefined') {
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    touchMultiplier: 1.5,
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+}
+
+/* ========================================================================
+   NAVIGATION
+   ======================================================================== */
+const nav = document.getElementById('nav');
+const navBurger = document.getElementById('navBurger');
+const navLinks = document.getElementById('navLinks');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 40) nav.classList.add('is-scrolled');
+  else nav.classList.remove('is-scrolled');
+}, { passive: true });
+
+navBurger.addEventListener('click', () => {
+  navBurger.classList.toggle('is-open');
+  navLinks.classList.toggle('is-open');
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navBurger.classList.remove('is-open');
+    navLinks.classList.remove('is-open');
+  });
+});
+
+/* ========================================================================
+   HERO TIMELINE (double-line mask + fade ups)
+   ======================================================================== */
+window.addEventListener('load', () => {
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+  tl.to('[data-hero-line="1"]', {
+    yPercent: 0,
+    duration: 1.2,
+    ease: 'power4.out'
+  }, 0.2)
+  .to('[data-hero-line="2"]', {
+    yPercent: 0,
+    duration: 1.2,
+    ease: 'power4.out'
+  }, 0.33)
+  .to('#heroEyebrow', {
+    opacity: 1,
+    y: 0,
+    duration: 0.9,
+    ease: 'power3.out'
+  }, 0.5)
+  .to('#heroSub', {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power3.out'
+  }, 0.8)
+  .to('#heroCta', {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power3.out'
+  }, 0.95)
+  .to('#heroMeta', {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power3.out'
+  }, 1.1);
+});
+
+/* ========================================================================
+   REVEAL-ON-SCROLL (up & down via IntersectionObserver)
+   ======================================================================== */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-in');
+      // Pour les stagger, on anime les enfants les uns après les autres
+      if (entry.target.hasAttribute('data-reveal-stagger')) {
+        const children = entry.target.children;
+        Array.from(children).forEach((child, i) => {
+          child.style.transitionDelay = `${i * 90}ms`;
+        });
+      }
+    } else {
+      entry.target.classList.remove('is-in');
+      if (entry.target.hasAttribute('data-reveal-stagger')) {
+        Array.from(entry.target.children).forEach(child => {
+          child.style.transitionDelay = '0ms';
+        });
+      }
+    }
+  });
+}, {
+  threshold: 0.15,
+  rootMargin: '0px 0px -8% 0px'
+});
+
+document.querySelectorAll('[data-reveal], [data-reveal-stagger]').forEach(el => {
+  revealObserver.observe(el);
+});
+
+/* ========================================================================
+   COUNTERS (stat numbers)
+   ======================================================================== */
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseFloat(el.getAttribute('data-counter'));
+      const decimals = parseInt(el.getAttribute('data-decimals') || '0');
+      const suffix = el.getAttribute('data-suffix') || '';
+      const duration = 1800;
+      const start = performance.now();
+
+      function tick(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const val = target * eased;
+        el.textContent = val.toFixed(decimals) + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toFixed(decimals) + suffix;
+      }
+      requestAnimationFrame(tick);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-counter]').forEach(el => counterObserver.observe(el));
+
+/* ========================================================================
+   ROOMS HORIZONTAL PIN-SCROLL (desktop only)
+   ======================================================================== */
+const roomsViewport = document.getElementById('roomsViewport');
+const roomsTrack = document.getElementById('roomsTrack');
+const roomsProgressBar = document.getElementById('roomsProgressBar');
+const roomsSection = document.getElementById('rooms');
+
+let roomsScrollTrigger = null;
+let roomsTween = null;
+
+function setupRoomsPin() {
+  if (window.innerWidth < 1024 || prefersReducedMotion) {
+    // Mobile / reduced motion : scroll natif horizontal
+    if (roomsScrollTrigger) { roomsScrollTrigger.kill(); roomsScrollTrigger = null; }
+    if (roomsTween) { roomsTween.kill(); roomsTween = null; }
+    gsap.set(roomsTrack, { clearProps: 'all' });
+    return;
+  }
+
+  const getScrollAmount = () => roomsTrack.scrollWidth - window.innerWidth;
+
+  if (roomsScrollTrigger) roomsScrollTrigger.kill();
+  if (roomsTween) roomsTween.kill();
+
+  roomsTween = gsap.to(roomsTrack, {
+    x: () => -getScrollAmount(),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: roomsViewport,
+      start: 'top top',
+      end: () => '+=' + getScrollAmount(),
+      pin: true,
+      scrub: 1,
+      invalidateOnRefresh: true,
+      anticipatePin: 1,
+      onUpdate: (self) => {
+        if (roomsProgressBar) roomsProgressBar.style.width = (self.progress * 100) + '%';
+        // Velocity skew
+        const v = self.getVelocity() / 800;
+        const skew = Math.max(-8, Math.min(8, v));
+        gsap.to('.room-card', {
+          skewX: skew,
+          duration: 0.3,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+        clearTimeout(window._roomsSkewTimeout);
+        window._roomsSkewTimeout = setTimeout(() => {
+          gsap.to('.room-card', { skewX: 0, duration: 0.5, ease: 'power3.out' });
+        }, 120);
+      },
+      onLeaveBack: () => {
+        gsap.set(roomsTrack, { x: 0 });
+        if (roomsProgressBar) roomsProgressBar.style.width = '0%';
+      }
+    }
+  });
+
+  roomsScrollTrigger = roomsTween.scrollTrigger;
+}
+
+setupRoomsPin();
+window.addEventListener('resize', () => {
+  ScrollTrigger.refresh();
+  setupRoomsPin();
+});
+
+/* ========================================================================
+   GALLERY CAROUSEL
+   ======================================================================== */
+const galleryViewport = document.getElementById('galleryViewport');
+const galleryTrack = document.getElementById('galleryTrack');
+const galleryPrev = document.getElementById('galleryPrev');
+const galleryNext = document.getElementById('galleryNext');
+const galleryCurrent = document.getElementById('galleryCurrent');
+const galleryItems = galleryTrack ? galleryTrack.querySelectorAll('.gallery__item') : [];
+
+function getGalleryItemWidth() {
+  if (galleryItems.length < 2) return 480;
+  const first = galleryItems[0];
+  const second = galleryItems[1];
+  const gap = parseInt(getComputedStyle(galleryTrack).gap) || 16;
+  return second.offsetLeft - first.offsetLeft;
+}
+
+function updateGalleryCounter() {
+  if (!galleryViewport || galleryItems.length === 0) return;
+  const itemWidth = getGalleryItemWidth();
+  const scrollLeft = galleryViewport.scrollLeft;
+  const idx = Math.min(galleryItems.length, Math.round(scrollLeft / itemWidth) + 1);
+  galleryCurrent.textContent = String(idx).padStart(2, '0');
+}
+
+if (galleryPrev) {
+  galleryPrev.addEventListener('click', () => {
+    galleryViewport.scrollBy({ left: -getGalleryItemWidth(), behavior: 'smooth' });
+  });
+}
+if (galleryNext) {
+  galleryNext.addEventListener('click', () => {
+    galleryViewport.scrollBy({ left: getGalleryItemWidth(), behavior: 'smooth' });
+  });
+}
+if (galleryViewport) {
+  galleryViewport.addEventListener('scroll', () => {
+    window.requestAnimationFrame(updateGalleryCounter);
+  }, { passive: true });
+}
+
+/* ========================================================================
+   RESERVATION FORM
+   ======================================================================== */
+const reserveForm = document.getElementById('reserveForm');
+const reserveConfirmation = document.getElementById('reserveConfirmation');
+
+// Dates min = aujourd'hui
+const today = new Date().toISOString().split('T')[0];
+const checkinInput = document.getElementById('checkin');
+const checkoutInput = document.getElementById('checkout');
+if (checkinInput) checkinInput.min = today;
+if (checkoutInput) checkoutInput.min = today;
+
+if (checkinInput) {
+  checkinInput.addEventListener('change', () => {
+    if (checkoutInput && checkinInput.value) {
+      const next = new Date(checkinInput.value);
+      next.setDate(next.getDate() + 1);
+      checkoutInput.min = next.toISOString().split('T')[0];
+      if (checkoutInput.value && checkoutInput.value <= checkinInput.value) {
+        checkoutInput.value = next.toISOString().split('T')[0];
+      }
+    }
+  });
+}
+
+if (reserveForm) {
+  reserveForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Simuler l'envoi
+    reserveForm.style.display = 'none';
+    reserveConfirmation.classList.add('is-visible');
+    // Scroll vers la confirmation
+    setTimeout(() => {
+      reserveConfirmation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+  });
+}
+
+/* ========================================================================
+   SMOOTH SCROLL POUR ANCRES (avec Lenis)
+   ======================================================================== */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', (e) => {
+    const href = anchor.getAttribute('href');
+    if (href === '#' || href.length < 2) return;
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      if (lenis) {
+        lenis.scrollTo(target, { offset: -60, duration: 1.4 });
+      } else {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  });
+});
+
+/* ========================================================================
+   RAFRAÎCHIR SCROLLTRIGGER APRÈS CHARGEMENT IMAGES
+   ======================================================================== */
+window.addEventListener('load', () => {
+  ScrollTrigger.refresh();
+});
+
+</script>
+
+</body>
+</html>
