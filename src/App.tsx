@@ -511,35 +511,57 @@ const App: React.FC = () => {
         document.querySelectorAll('[data-counter]').forEach((el) => counterObserver.observe(el));
 
         // Services Horizontal Pin-scroll & Elastic Curtain Effect (First in DOM)
+        const servicesSection = document.getElementById('services');
         const servicesViewport = document.getElementById('servicesViewport');
         const servicesTrack = document.getElementById('servicesTrack');
         const servicesProgressBar = document.getElementById('servicesProgressBar');
 
         let servicesTween: any = null;
+        let servicesRevealTrigger: any = null;
 
         if (servicesViewport && servicesTrack && window.innerWidth >= 1024) {
             const getServicesScrollAmount = () => servicesTrack.scrollWidth - window.innerWidth;
             const serviceCards = servicesTrack.querySelectorAll('.project, .service-card');
 
             // Set initial state for reveal
-            gsap.set(serviceCards, { opacity: 0, y: 50, scale: 0.96 });
+            gsap.set(serviceCards, { opacity: 0, y: 60, scale: 0.95 });
 
-            // 1. Logique d'apparition déclenchée avant d'atteindre le pin (pas de trou noir)
-            gsap.to(serviceCards, {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.7,
-                stagger: 0.15,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: servicesViewport,
-                    start: 'top 85%',
-                    toggleActions: 'play reverse play reverse'
-                }
-            });
+            if (servicesSection) {
+                servicesRevealTrigger = ScrollTrigger.create({
+                    trigger: servicesSection,
+                    start: 'top 80%',
+                    onEnter: () => {
+                        gsap.to(serviceCards, {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.7,
+                            stagger: 0.15,
+                            ease: 'power3.out'
+                        });
+                    },
+                    onEnterBack: () => {
+                        gsap.to(serviceCards, {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.7,
+                            stagger: 0.15,
+                            ease: 'power3.out'
+                        });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(serviceCards, {
+                            opacity: 0,
+                            y: 60,
+                            scale: 0.95,
+                            duration: 0.5,
+                            ease: 'power2.in'
+                        });
+                    }
+                });
+            }
 
-            // 2. Logique d'épinglage et de défilement horizontal
             servicesTween = gsap.to(servicesTrack, {
                 x: () => -getServicesScrollAmount(),
                 ease: 'none',
@@ -552,6 +574,15 @@ const App: React.FC = () => {
                     scrub: 1.2,
                     invalidateOnRefresh: true,
                     anticipatePin: 1,
+                    onLeave: () => {
+                        gsap.to(serviceCards, {
+                            opacity: 0,
+                            y: 60,
+                            scale: 0.95,
+                            duration: 0.5,
+                            ease: 'power2.in'
+                        });
+                    },
                     onUpdate: (self) => {
                         if (servicesProgressBar) {
                             servicesProgressBar.style.width = self.progress * 100 + '%';
@@ -583,35 +614,57 @@ const App: React.FC = () => {
         }
 
         // Rooms Horizontal Pin-scroll & Elastic Curtain Effect (Second in DOM)
+        const roomsSection = document.getElementById('rooms');
         const roomsViewport = document.getElementById('roomsViewport');
         const roomsTrack = document.getElementById('roomsTrack');
         const roomsProgressBar = document.getElementById('roomsProgressBar');
 
         let roomsTween: any = null;
+        let roomsRevealTrigger: any = null;
 
         if (roomsViewport && roomsTrack && window.innerWidth >= 1024) {
             const getScrollAmount = () => roomsTrack.scrollWidth - window.innerWidth;
             const cards = roomsTrack.querySelectorAll('.room-card');
 
             // Set initial state for reveal
-            gsap.set(cards, { opacity: 0, y: 50, scale: 0.96 });
+            gsap.set(cards, { opacity: 0, y: 60, scale: 0.95 });
 
-            // 1. Logique d'apparition déclenchée avant le pin (pas de vide)
-            gsap.to(cards, {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.7,
-                stagger: 0.15,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: roomsViewport,
-                    start: 'top 85%',
-                    toggleActions: 'play reverse play reverse'
-                }
-            });
+            if (roomsSection) {
+                roomsRevealTrigger = ScrollTrigger.create({
+                    trigger: roomsSection,
+                    start: 'top 80%',
+                    onEnter: () => {
+                        gsap.to(cards, {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.7,
+                            stagger: 0.15,
+                            ease: 'power3.out'
+                        });
+                    },
+                    onEnterBack: () => {
+                        gsap.to(cards, {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.7,
+                            stagger: 0.15,
+                            ease: 'power3.out'
+                        });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(cards, {
+                            opacity: 0,
+                            y: 60,
+                            scale: 0.95,
+                            duration: 0.5,
+                            ease: 'power2.in'
+                        });
+                    }
+                });
+            }
 
-            // 2. Logique d'épinglage et de défilement horizontal
             roomsTween = gsap.to(roomsTrack, {
                 x: () => -getScrollAmount(),
                 ease: 'none',
@@ -624,6 +677,15 @@ const App: React.FC = () => {
                     scrub: 1.2,
                     invalidateOnRefresh: true,
                     anticipatePin: 1,
+                    onLeave: () => {
+                        gsap.to(cards, {
+                            opacity: 0,
+                            y: 60,
+                            scale: 0.95,
+                            duration: 0.5,
+                            ease: 'power2.in'
+                        });
+                    },
                     onUpdate: (self) => {
                         if (roomsProgressBar) {
                             roomsProgressBar.style.width = self.progress * 100 + '%';
@@ -671,6 +733,8 @@ const App: React.FC = () => {
             counterObserver.disconnect();
             window.removeEventListener('load', handleImageLoad);
             clearTimeout(refreshTimer);
+            if (servicesRevealTrigger) servicesRevealTrigger.kill();
+            if (roomsRevealTrigger) roomsRevealTrigger.kill();
             if (servicesTween) servicesTween.kill();
             if (roomsTween) roomsTween.kill();
         };
@@ -2029,7 +2093,7 @@ const App: React.FC = () => {
                 <CustomCalendar 
                     isOpen={isCalendarOpen}
                     onClose={() => setIsCalendarOpen(false)}
-                    onSelectDates={(startDate, endDate) => {
+                    onSelectDates={(startDate: string, endDate: string) => {
                         setCheckin(startDate);
                         setCheckout(endDate);
                     }}
