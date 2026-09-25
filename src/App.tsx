@@ -546,6 +546,34 @@ const App: React.FC = () => {
                             ease: 'power3.out'
                         });
                     },
+                    onEnterBack: () => {
+                        gsap.to(serviceCards, {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 1.2,
+                            stagger: 0.25,
+                            ease: 'power3.out'
+                        });
+                    },
+                    onLeave: () => {
+                        gsap.to(serviceCards, {
+                            opacity: 0,
+                            y: 60,
+                            scale: 0.95,
+                            duration: 0.6,
+                            ease: 'power2.in'
+                        });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(serviceCards, {
+                            opacity: 0,
+                            y: 60,
+                            scale: 0.95,
+                            duration: 0.6,
+                            ease: 'power2.in'
+                        });
+                    },
                     onUpdate: (self) => {
                         if (servicesProgressBar) {
                             servicesProgressBar.style.width = self.progress * 100 + '%';
@@ -611,6 +639,34 @@ const App: React.FC = () => {
                             duration: 1.2,
                             stagger: 0.4,
                             ease: 'power3.out'
+                        });
+                    },
+                    onEnterBack: () => {
+                        gsap.to(cards, {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 1.2,
+                            stagger: 0.4,
+                            ease: 'power3.out'
+                        });
+                    },
+                    onLeave: () => {
+                        gsap.to(cards, {
+                            opacity: 0,
+                            y: 60,
+                            scale: 0.95,
+                            duration: 0.6,
+                            ease: 'power2.in'
+                        });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(cards, {
+                            opacity: 0,
+                            y: 60,
+                            scale: 0.95,
+                            duration: 0.6,
+                            ease: 'power2.in'
                         });
                     },
                     onUpdate: (self) => {
