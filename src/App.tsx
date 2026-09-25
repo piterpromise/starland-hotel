@@ -511,6 +511,7 @@ const App: React.FC = () => {
         document.querySelectorAll('[data-counter]').forEach((el) => counterObserver.observe(el));
 
         // Services Horizontal Pin-scroll & Elastic Curtain Effect (First in DOM)
+        const servicesSection = document.getElementById('services');
         const servicesViewport = document.getElementById('servicesViewport');
         const servicesTrack = document.getElementById('servicesTrack');
         const servicesProgressBar = document.getElementById('servicesProgressBar');
@@ -522,16 +523,16 @@ const App: React.FC = () => {
             const serviceCards = servicesTrack.querySelectorAll('.project, .service-card');
 
             // Set initial state for reveal
-            gsap.set(serviceCards, { opacity: 0, y: 60, scale: 0.95 });
+            gsap.set(serviceCards, { opacity: 0, y: 50, scale: 0.96 });
 
             servicesTween = gsap.to(servicesTrack, {
                 x: () => -getServicesScrollAmount(),
                 ease: 'none',
                 scrollTrigger: {
-                    trigger: servicesViewport,
-                    start: 'top top',
-                    end: () => '+=' + (getServicesScrollAmount() + window.innerHeight * 1.5),
-                    pin: true,
+                    trigger: servicesSection || servicesViewport,
+                    start: 'top 75%',
+                    end: () => '+=' + (getServicesScrollAmount() + window.innerHeight * 1.2),
+                    pin: servicesViewport,
                     pinSpacing: true,
                     scrub: 1.2,
                     invalidateOnRefresh: true,
@@ -541,9 +542,10 @@ const App: React.FC = () => {
                             opacity: 1,
                             y: 0,
                             scale: 1,
-                            duration: 1.2,
-                            stagger: 0.25,
-                            ease: 'power3.out'
+                            duration: 0.7,
+                            stagger: 0.12,
+                            ease: 'power3.out',
+                            overwrite: 'auto'
                         });
                     },
                     onEnterBack: () => {
@@ -551,26 +553,27 @@ const App: React.FC = () => {
                             opacity: 1,
                             y: 0,
                             scale: 1,
-                            duration: 1.2,
-                            stagger: 0.25,
-                            ease: 'power3.out'
+                            duration: 0.7,
+                            stagger: 0.12,
+                            ease: 'power3.out',
+                            overwrite: 'auto'
                         });
                     },
                     onLeave: () => {
                         gsap.to(serviceCards, {
                             opacity: 0,
-                            y: 60,
-                            scale: 0.95,
-                            duration: 0.6,
+                            y: 50,
+                            scale: 0.96,
+                            duration: 0.4,
                             ease: 'power2.in'
                         });
                     },
                     onLeaveBack: () => {
                         gsap.to(serviceCards, {
                             opacity: 0,
-                            y: 60,
-                            scale: 0.95,
-                            duration: 0.6,
+                            y: 50,
+                            scale: 0.96,
+                            duration: 0.4,
                             ease: 'power2.in'
                         });
                     },
@@ -605,6 +608,7 @@ const App: React.FC = () => {
         }
 
         // Rooms Horizontal Pin-scroll & Elastic Curtain Effect (Second in DOM)
+        const roomsSection = document.getElementById('rooms');
         const roomsViewport = document.getElementById('roomsViewport');
         const roomsTrack = document.getElementById('roomsTrack');
         const roomsProgressBar = document.getElementById('roomsProgressBar');
@@ -616,29 +620,30 @@ const App: React.FC = () => {
             const cards = roomsTrack.querySelectorAll('.room-card');
 
             // Set initial state for reveal
-            gsap.set(cards, { opacity: 0, y: 60, scale: 0.95 });
+            gsap.set(cards, { opacity: 0, y: 50, scale: 0.96 });
 
             roomsTween = gsap.to(roomsTrack, {
                 x: () => -getScrollAmount(),
                 ease: 'none',
                 scrollTrigger: {
-                    trigger: roomsViewport,
-                    start: 'top top',
-                    end: () => '+=' + (getScrollAmount() + window.innerHeight * 1.5),
-                    pin: true,
+                    trigger: roomsSection || roomsViewport,
+                    start: 'top 75%',
+                    end: () => '+=' + (getScrollAmount() + window.innerHeight * 1.2),
+                    pin: roomsViewport,
                     pinSpacing: true,
                     scrub: 1.2,
                     invalidateOnRefresh: true,
                     anticipatePin: 1,
                     onEnter: () => {
-                        // Reveal in cascade with delay
+                        // Fast reveal in cascade without long delays
                         gsap.to(cards, {
                             opacity: 1,
                             y: 0,
                             scale: 1,
-                            duration: 1.2,
-                            stagger: 0.4,
-                            ease: 'power3.out'
+                            duration: 0.7,
+                            stagger: 0.15,
+                            ease: 'power3.out',
+                            overwrite: 'auto'
                         });
                     },
                     onEnterBack: () => {
@@ -646,26 +651,27 @@ const App: React.FC = () => {
                             opacity: 1,
                             y: 0,
                             scale: 1,
-                            duration: 1.2,
-                            stagger: 0.4,
-                            ease: 'power3.out'
+                            duration: 0.7,
+                            stagger: 0.15,
+                            ease: 'power3.out',
+                            overwrite: 'auto'
                         });
                     },
                     onLeave: () => {
                         gsap.to(cards, {
                             opacity: 0,
-                            y: 60,
-                            scale: 0.95,
-                            duration: 0.6,
+                            y: 50,
+                            scale: 0.96,
+                            duration: 0.4,
                             ease: 'power2.in'
                         });
                     },
                     onLeaveBack: () => {
                         gsap.to(cards, {
                             opacity: 0,
-                            y: 60,
-                            scale: 0.95,
-                            duration: 0.6,
+                            y: 50,
+                            scale: 0.96,
+                            duration: 0.4,
                             ease: 'power2.in'
                         });
                     },
