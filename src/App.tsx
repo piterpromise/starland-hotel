@@ -255,7 +255,7 @@ const App: React.FC = () => {
 
     useEffect(() => {
         const startTime = Date.now();
-        const duration = 4500; // 9.5s loading + 0.5s fade out = 10s max
+        const duration = 2500; // 2.5s progress + 0.5s fade out = 3s max total
 
         const interval = setInterval(() => {
             const elapsed = Date.now() - startTime;
@@ -267,9 +267,9 @@ const App: React.FC = () => {
                 setPreloaderFading(true);
                 setTimeout(() => {
                     setIsLoading(false);
-                }, 600);
+                }, 500);
             }
-        }, 50);
+        }, 30);
 
         return () => clearInterval(interval);
     }, []);
