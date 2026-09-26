@@ -522,13 +522,64 @@ const App: React.FC = () => {
             const serviceCards = servicesTrack.querySelectorAll('.project, .service-card');
 
             // Set initial state for cards
-            gsap.set(serviceCards, { opacity: 0, y: 80, scale: 0.92 });
+            gsap.set(serviceCards, { opacity: 0, y: 50, scale: 0.95 });
 
-            const servicesTl = gsap.timeline({
+            // ScrollTrigger reveal that plays on EVERY scroll down / scroll up
+            ScrollTrigger.create({
+                trigger: servicesViewport,
+                start: 'top 85%',
+                end: 'bottom 15%',
+                onEnter: () => {
+                    gsap.to(serviceCards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        ease: 'power3.out',
+                        overwrite: 'auto'
+                    });
+                },
+                onEnterBack: () => {
+                    gsap.to(serviceCards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        ease: 'power3.out',
+                        overwrite: 'auto'
+                    });
+                },
+                onLeave: () => {
+                    gsap.to(serviceCards, {
+                        opacity: 0,
+                        y: 50,
+                        scale: 0.95,
+                        duration: 0.5,
+                        ease: 'power2.in',
+                        overwrite: 'auto'
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(serviceCards, {
+                        opacity: 0,
+                        y: 50,
+                        scale: 0.95,
+                        duration: 0.5,
+                        ease: 'power2.in',
+                        overwrite: 'auto'
+                    });
+                }
+            });
+
+            servicesTween = gsap.to(servicesTrack, {
+                x: () => -getServicesScrollAmount(),
+                ease: 'none',
                 scrollTrigger: {
                     trigger: servicesViewport,
-                    start: 'top 85%',
-                    end: () => '+=' + (getServicesScrollAmount() + window.innerHeight * 1.2),
+                    start: 'top top',
+                    end: () => '+=' + getServicesScrollAmount(),
                     pin: true,
                     pinSpacing: true,
                     scrub: 1.2,
@@ -562,35 +613,6 @@ const App: React.FC = () => {
                     }
                 }
             });
-
-            // 1) Entrance reveal BEFORE/AS pin engages (starts at top 85%)
-            servicesTl.to(serviceCards, {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                stagger: 0.1,
-                duration: 0.4,
-                ease: 'power2.out'
-            }, 0);
-
-            // 2) Horizontal scroll track movement
-            servicesTl.to(servicesTrack, {
-                x: () => -getServicesScrollAmount(),
-                ease: 'none',
-                duration: 2
-            }, 0.3);
-
-            // 3) Exit fade out as section leaves viewport
-            servicesTl.to(serviceCards, {
-                opacity: 0,
-                y: -60,
-                scale: 0.92,
-                stagger: 0.08,
-                duration: 0.4,
-                ease: 'power2.in'
-            }, 2.1);
-
-            servicesTween = servicesTl;
         }
 
         // Rooms Horizontal Pin-scroll & Elastic Curtain Effect (Second in DOM)
@@ -605,13 +627,64 @@ const App: React.FC = () => {
             const cards = roomsTrack.querySelectorAll('.room-card');
 
             // Set initial state for cards
-            gsap.set(cards, { opacity: 0, y: 80, scale: 0.92 });
+            gsap.set(cards, { opacity: 0, y: 50, scale: 0.95 });
 
-            const roomsTl = gsap.timeline({
+            // ScrollTrigger reveal that plays on EVERY scroll down / scroll up
+            ScrollTrigger.create({
+                trigger: roomsViewport,
+                start: 'top 85%',
+                end: 'bottom 15%',
+                onEnter: () => {
+                    gsap.to(cards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        ease: 'power3.out',
+                        overwrite: 'auto'
+                    });
+                },
+                onEnterBack: () => {
+                    gsap.to(cards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        ease: 'power3.out',
+                        overwrite: 'auto'
+                    });
+                },
+                onLeave: () => {
+                    gsap.to(cards, {
+                        opacity: 0,
+                        y: 50,
+                        scale: 0.95,
+                        duration: 0.5,
+                        ease: 'power2.in',
+                        overwrite: 'auto'
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(cards, {
+                        opacity: 0,
+                        y: 50,
+                        scale: 0.95,
+                        duration: 0.5,
+                        ease: 'power2.in',
+                        overwrite: 'auto'
+                    });
+                }
+            });
+
+            roomsTween = gsap.to(roomsTrack, {
+                x: () => -getScrollAmount(),
+                ease: 'none',
                 scrollTrigger: {
                     trigger: roomsViewport,
-                    start: 'top 85%',
-                    end: () => '+=' + (getScrollAmount() + window.innerHeight * 1.2),
+                    start: 'top top',
+                    end: () => '+=' + getScrollAmount(),
                     pin: true,
                     pinSpacing: true,
                     scrub: 1.2,
@@ -646,35 +719,6 @@ const App: React.FC = () => {
                     }
                 }
             });
-
-            // 1) Entrance reveal BEFORE/AS pin engages (starts at top 85%)
-            roomsTl.to(cards, {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                stagger: 0.1,
-                duration: 0.4,
-                ease: 'power2.out'
-            }, 0);
-
-            // 2) Horizontal scroll track movement
-            roomsTl.to(roomsTrack, {
-                x: () => -getScrollAmount(),
-                ease: 'none',
-                duration: 2
-            }, 0.3);
-
-            // 3) Exit fade out as section leaves viewport
-            roomsTl.to(cards, {
-                opacity: 0,
-                y: -60,
-                scale: 0.92,
-                stagger: 0.08,
-                duration: 0.4,
-                ease: 'power2.in'
-            }, 2.1);
-
-            roomsTween = roomsTl;
         }
 
         // Refresh ScrollTrigger to ensure pin positions and spacers match DOM layout
