@@ -521,8 +521,25 @@ const App: React.FC = () => {
             const getServicesScrollAmount = () => servicesTrack.scrollWidth - window.innerWidth;
             const serviceCards = servicesTrack.querySelectorAll('.project, .service-card');
 
-            // Set initial state for cards to be visible
-            gsap.set(serviceCards, { opacity: 1, y: 0, scale: 1 });
+            // Set initial state for cards (hidden for reveal)
+            gsap.set(serviceCards, { opacity: 0, y: 50, scale: 0.95 });
+
+            // Create separate ScrollTrigger for entrance reveal animation
+            ScrollTrigger.create({
+                trigger: servicesViewport,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => {
+                    gsap.to(serviceCards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        ease: 'power3.out'
+                    });
+                }
+            });
 
             servicesTween = gsap.to(servicesTrack, {
                 x: () => -getServicesScrollAmount(),
@@ -577,8 +594,25 @@ const App: React.FC = () => {
             const getScrollAmount = () => roomsTrack.scrollWidth - window.innerWidth;
             const cards = roomsTrack.querySelectorAll('.room-card');
 
-            // Set initial state for cards to be visible
-            gsap.set(cards, { opacity: 1, y: 0, scale: 1 });
+            // Set initial state for cards (hidden for reveal)
+            gsap.set(cards, { opacity: 0, y: 50, scale: 0.95 });
+
+            // Create separate ScrollTrigger for entrance reveal animation
+            ScrollTrigger.create({
+                trigger: roomsViewport,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => {
+                    gsap.to(cards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        ease: 'power3.out'
+                    });
+                }
+            });
 
             roomsTween = gsap.to(roomsTrack, {
                 x: () => -getScrollAmount(),
