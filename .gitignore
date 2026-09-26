@@ -42,10 +42,9 @@ dist/
 .env.test.local
 .env.production.local
 
-# Heavy raw media files
-Videos/*.mp4
-Videos_backup/
+# Heavy raw media files - keep .jpg excluded, but allow .webp and .mp4
 Autres Images/*.jpg
 Images/*.jpg
 Repas/*.jpg
+Videos_backup/
 
