@@ -521,25 +521,8 @@ const App: React.FC = () => {
             const getServicesScrollAmount = () => servicesTrack.scrollWidth - window.innerWidth;
             const serviceCards = servicesTrack.querySelectorAll('.project, .service-card');
 
-            // Set initial state for cards (hidden for reveal)
+            // Set initial state for cards
             gsap.set(serviceCards, { opacity: 0, y: 50, scale: 0.95 });
-
-            // Create separate ScrollTrigger for entrance reveal animation
-            ScrollTrigger.create({
-                trigger: servicesViewport,
-                start: 'top 85%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(serviceCards, {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        duration: 0.8,
-                        stagger: 0.15,
-                        ease: 'power3.out'
-                    });
-                }
-            });
 
             servicesTween = gsap.to(servicesTrack, {
                 x: () => -getServicesScrollAmount(),
@@ -556,6 +539,36 @@ const App: React.FC = () => {
                     onUpdate: (self) => {
                         if (servicesProgressBar) {
                             servicesProgressBar.style.width = self.progress * 100 + '%';
+                        }
+
+                        // Seamless reveal / fade-out based on exact scroll position boundaries
+                        // When entering/scrolling near top (progress < 0.05) or exit near bottom (progress > 0.95)
+                        if (self.progress < 0.05) {
+                            const factor = self.progress / 0.05;
+                            gsap.to(serviceCards, {
+                                opacity: factor,
+                                y: (1 - factor) * 50,
+                                scale: 0.95 + factor * 0.05,
+                                duration: 0.2,
+                                overwrite: 'auto'
+                            });
+                        } else if (self.progress > 0.95) {
+                            const factor = (1 - self.progress) / 0.05;
+                            gsap.to(serviceCards, {
+                                opacity: factor,
+                                y: (1 - factor) * 50,
+                                scale: 0.95 + factor * 0.05,
+                                duration: 0.2,
+                                overwrite: 'auto'
+                            });
+                        } else {
+                            gsap.to(serviceCards, {
+                                opacity: 1,
+                                y: 0,
+                                scale: 1,
+                                duration: 0.2,
+                                overwrite: 'auto'
+                            });
                         }
 
                         const velocity = self.getVelocity() / 400;
@@ -594,25 +607,8 @@ const App: React.FC = () => {
             const getScrollAmount = () => roomsTrack.scrollWidth - window.innerWidth;
             const cards = roomsTrack.querySelectorAll('.room-card');
 
-            // Set initial state for cards (hidden for reveal)
+            // Set initial state for cards
             gsap.set(cards, { opacity: 0, y: 50, scale: 0.95 });
-
-            // Create separate ScrollTrigger for entrance reveal animation
-            ScrollTrigger.create({
-                trigger: roomsViewport,
-                start: 'top 85%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(cards, {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        duration: 0.8,
-                        stagger: 0.15,
-                        ease: 'power3.out'
-                    });
-                }
-            });
 
             roomsTween = gsap.to(roomsTrack, {
                 x: () => -getScrollAmount(),
@@ -629,6 +625,35 @@ const App: React.FC = () => {
                     onUpdate: (self) => {
                         if (roomsProgressBar) {
                             roomsProgressBar.style.width = self.progress * 100 + '%';
+                        }
+
+                        // Seamless reveal / fade-out based on exact scroll position boundaries
+                        if (self.progress < 0.05) {
+                            const factor = self.progress / 0.05;
+                            gsap.to(cards, {
+                                opacity: factor,
+                                y: (1 - factor) * 50,
+                                scale: 0.95 + factor * 0.05,
+                                duration: 0.2,
+                                overwrite: 'auto'
+                            });
+                        } else if (self.progress > 0.95) {
+                            const factor = (1 - self.progress) / 0.05;
+                            gsap.to(cards, {
+                                opacity: factor,
+                                y: (1 - factor) * 50,
+                                scale: 0.95 + factor * 0.05,
+                                duration: 0.2,
+                                overwrite: 'auto'
+                            });
+                        } else {
+                            gsap.to(cards, {
+                                opacity: 1,
+                                y: 0,
+                                scale: 1,
+                                duration: 0.2,
+                                overwrite: 'auto'
+                            });
                         }
 
                         // Curtain Elastic Skew effect based on scroll velocity
