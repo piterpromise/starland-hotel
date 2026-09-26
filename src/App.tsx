@@ -524,11 +524,11 @@ const App: React.FC = () => {
             // Set initial state for cards
             gsap.set(serviceCards, { opacity: 0, y: 50, scale: 0.95 });
 
-            // ScrollTrigger reveal that plays on EVERY scroll down / scroll up
+            // ScrollTrigger reveal for services: end boundary must include the pin scroll distance
             ScrollTrigger.create({
                 trigger: servicesViewport,
                 start: 'top 85%',
-                end: 'bottom 15%',
+                end: () => '+=' + (getServicesScrollAmount() + window.innerHeight),
                 onEnter: () => {
                     gsap.to(serviceCards, {
                         opacity: 1,
@@ -629,11 +629,11 @@ const App: React.FC = () => {
             // Set initial state for cards
             gsap.set(cards, { opacity: 0, y: 50, scale: 0.95 });
 
-            // ScrollTrigger reveal that plays on EVERY scroll down / scroll up
+            // ScrollTrigger reveal for rooms: end boundary must include the pin scroll distance
             ScrollTrigger.create({
                 trigger: roomsViewport,
                 start: 'top 85%',
-                end: 'bottom 15%',
+                end: () => '+=' + (getScrollAmount() + window.innerHeight),
                 onEnter: () => {
                     gsap.to(cards, {
                         opacity: 1,
